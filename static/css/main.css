@@ -1,0 +1,233 @@
+@charset "UTF-8";
+
+/* OVERRIDE DESIGNS  */
+.container{max-width: 1200px}
+.nav-link{font-weight: bold; font-size: 1.1em}
+.navbar-brand{font-weight: bold; font-size: 2.0em}
+.navbar{z-index: 1;}
+.desktop_nav_icon span{font-size: 1.3em}
+.fa-remove{font-size: 1.2em!important; font-weight: normal!important;}
+
+
+
+
+
+
+
+
+
+.padding_li_10 li{padding-right: 10px}
+.close_btn_container{margin-bottom: -15px; margin-left: -10px}
+.close_btn{border-radius: 15px; border: none}
+
+.modal_login_input{
+    border-left: none!important;
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+.modal_login_input:hover, .modal_login_input:focus, .modal_login_input:active{
+    border: 1px solid gray;
+    border-left: none!important;
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: none!important;
+}
+
+.modal_login_input_iconBox{
+    border-top-right-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+    width: 40px;
+}
+
+
+
+/*  RESTAURANT REVIEW  */
+
+
+/* FOOD */
+.food_list_img{height: 160px}
+
+
+/*  PROFILE   */
+.profile_link_btns a{width: 100px}
+.tdprofile{max-height: 270px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FOOTER */
+.social_links_footer li{
+    display: inline-block;
+    list-style: none;
+    margin-bottom: 10px;
+    padding-right: 20px;
+}
+.social_links_footer li a{
+    font-size: 1.4em;
+    color: #157b17;
+    font-weight: bold;
+}
+
+.social_links_footer li a:hover{
+    color: white;
+}
+
+
+.ajaxLoader{
+  display: none;
+  position: fixed;
+  top: 160px;
+  left: 0px;
+  opacity: 0.5;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 1000;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+.ajaxLoader img{
+  height: 80px;
+  width: 80px;
+}
+
+
+/*btn back to top*/
+.btn-back-to-top {
+  display: none;
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  bottom: 40px;
+  right: 40px;
+  background-color: black;
+  opacity: 0.5;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-radius: 4px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+
+.symbol-btn-back-to-top {
+    font-size: 22px;
+    color: white;
+    line-height: 1em;
+}
+
+.btn-back-to-top:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  .btn-back-to-top {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+
+
+
+/*    768px ~ 1024px    */
+@media screen
+  and (min-device-width: 768px)
+  and (max-device-height: 1024px){
+    .side_menu_container{width: 280px;}
+    .side_menu li a{font-size: 1.1em;}
+    .sideBarDialog{width: 240px;}
+}
+
+
+/*    426px ~ 767px    */
+@media screen
+  and (min-device-width: 426px)
+  and (max-device-height: 767px){
+    .side_menu_container{width: 280px;}
+    .side_menu li a{font-size: 1.1em;}
+    .sideBarDialog{width: 240px;}
+    .home_restaurant_img{height: 200px}
+    .restaurant_order_food_img{height: 160px}
+}
+
+
+/*    320px ~ 425px   */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 425px){
+    .side_menu_container{width: 220px;}
+    .restaurants_list_heading{font-size: 1.4em}
+    .side_menu li a{font-size: 1.0em;}
+    .sideBarDialog{width: 200px;}
+    .home_restaurant_img{height: 180px}
+    .restaurant_order_food_img{height: 120px}
+    .brand_img{height: 50px}
+}
+
+
+@media only screen
+  and (min-device-width: 280px)
+  and (max-device-width: 340px){
+    .nav_icons{font-size: 0.7em!important}
+    .brand_img{height: 40px}
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

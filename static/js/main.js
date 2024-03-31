@@ -23,7 +23,26 @@ $(document).ready(function () {
         el.attr("placeholder", "");
     }
 
- 
+    // Print one phrase
+    function printPhrase(phrase, el) {
+        return new Promise(resolve => {
+            // Clear placeholder before typing next phrase
+            clearPlaceholder(el);
+            let letters = phrase.split('');
+            // For each letter in phrase
+            letters.reduce(
+                (promise, letter, index) => promise.then(_ => {
+                    // Resolve promise when all letters are typed
+                    if (index === letters.length - 1) {
+                        // Delay before start next phrase "typing"
+                        setTimeout(resolve, 400);
+                    }
+                    return addToPlaceholder(letter, el);
+                }),
+                Promise.resolve()
+            );
+        });
+    }
 
     // Print given phrases to element
     function printPhrases(phrases, el) {
@@ -47,7 +66,25 @@ $(document).ready(function () {
     }
     runSearchHelp();
 
- 
+
+
+    /*[ Back to top ]
+    ===========================================================*/
+    var windowH = $(window).height()/2;
+
+    $(window).on('scroll',function(){
+        if ($(this).scrollTop() > windowH) {
+            $("#myBtn").css('display','flex');
+        } else {
+            $("#myBtn").css('display','none');
+        }
+    });
+
+    $('#myBtn').on("click", function(){
+        $('html, body').animate({scrollTop: 0}, 600);
+    });
+
+
 
 
     /*	MOBILE */

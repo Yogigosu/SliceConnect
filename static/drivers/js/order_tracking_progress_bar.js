@@ -8,7 +8,26 @@ $(document).ready(function () {
 
     setProgressBar(current);
 
-    
+    function increaseProgressBar(parent_obj) {
+        currentstep = $(parent_obj).parent();
+        nextstep = $(parent_obj).parent().next();
+
+        $("#progressbar li").eq($("fieldset")
+            .index(nextstep)).addClass("active");
+
+        nextstep.show();
+        currentstep.animate({opacity: 0}, {
+            step: function (now) {
+                opacity = 1 - now;
+
+                currentstep.css({
+                    'display': 'none', 'position': 'relative'
+                });
+                nextstep.css({'opacity': opacity});
+            }, duration: 500
+        });
+        setProgressBar(current);
+    }
 
     const current_ = current
 
@@ -73,5 +92,15 @@ $(document).ready(function () {
         }
 
     });
- 
+
+    function setProgressBar(currentStep) {
+        var percent = parseFloat(100 / steps) * currentStep;
+        percent = percent.toFixed();
+        $(".form-progress-bar")
+            .css("width", percent + "%")
+    }
+
+    $(".submit").click(function () {
+        return false;
+    })
 });

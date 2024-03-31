@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Admin Panel
+{% endblock %}
+
+{% block css %}
+
+    <style>
+        .profile-image, .document-image {
+            max-height: 400px;
+            max-width: 90%;
+            object-fit: contain;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block navbar %}
+    {% include 'admins/navbar.html' %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h2 class="text-center my-5">Delivery Agent Details for COD</h2>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="main-content">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-5">
+
+        <div class="h-screen flex-grow-1">
+            <main class="py-6 bg-surface-secondary">
+                <div class="container-fluid">
+ 
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}
+
+
+

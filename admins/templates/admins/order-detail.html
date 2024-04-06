@@ -27,7 +27,45 @@
                         <div class="col-xl-6 col-sm-6 col-12">
                             <div class="card shadow border-0">
                                 <div class="card-body">
- 
+                                    <div class="row">
+
+                                        <div class="col-12 border-bottom">
+                                            <span class="h3 font-semibold d-block mb-2">Order Details</span>
+                                        </div>
+
+                                        <div class="col-sm-12 text-center mt-5">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                <tr>
+                                                    <th scope="row">Order Id</th>
+                                                    <td>{{ order.id }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Order date</th>
+                                                    <td>{{ order.order_date }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Order Status</th>
+                                                    <td>{{ order.status }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Restaurant name</th>
+                                                    <td>{{ order.restaurant.name }}</td>
+                                                </tr>
+                                                {% if order.razorpay_payment_id %}
+                                                    <tr>
+                                                        <th scope="row">Payment Id</th>
+                                                        <td>
+                                                            {{ order.razorpay_payment_id }}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

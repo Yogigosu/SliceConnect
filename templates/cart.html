@@ -28,14 +28,28 @@
                 @if(!config('settings.social_mode'))
 
                     @if (config('app.isft')&&count($timeSlots)>0)
-                    <!--   -->
+                    <!-- FOOD TIGER -->
                         <!-- Delivery method -->
                         @if($restorant->can_pickup == 1)
                             @if($restorant->can_deliver == 1)
                               @include('cart.delivery')
                             @endif
                         @endif
- 
+
+                        <!-- Delivery time slot -->
+                        @include('cart.time')
+
+                        <!-- Delivery address -->
+                        <div id='addressBox'>
+                            @include('cart.address')
+                        </div>
+
+                        <!-- Comment -->
+                        @include('cart.comment')
+
+                    @else
+
+                      <!-- QRSAAS -->
                       
                       <!-- DINE IN OR TAKEAWAY -->
                       @if (config('settings.enable_pickup'))

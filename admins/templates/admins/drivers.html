@@ -29,7 +29,22 @@
 {% block body %}
 
     <div class="container-fluid my-5">
- 
+        <div class="row my-5">
+            <div class="col-md-8  offset-md-1">
+                {% if drivers %}
+                    <h2 class="text-center">
+                        Delivery Agents
+                    </h2>
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <form class="d-flex" method="GET">
+                    <input aria-label="Search" class="form-control me-2" name="agent"
+                           placeholder="Search by id, name, or email" type="search" id="search-input">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-8 offset-md-1">
@@ -57,7 +72,47 @@
                             </tbody>
                         </table>
 
-                        
+                        {% if page_obj|length > 0 %}
+                            <div class="my-4">
+                                {% if page_obj.has_previous %}
+                                    <a class="btn btn-primary btn-sm page_number_link"
+                                       href="{{ page_obj.previous_page_number }}">
+                                        Previous Page
+                                    </a>
+                                {% else %}
+                                    <button class="btn btn-primary btn-sm disabled">
+                                        Previous Page
+                                    </button>
+                                {% endif %}
+
+                                {% for page_number in page_obj.adjusted_elided_pages %}
+                                    {% if page_number == page_obj.paginator.ELLIPSIS %}
+                                        {{ page_number }}
+                                    {% else %}
+                                        <a class="page_number_link"
+                                           href="{{ page_number }}">
+
+                                            {% if page_number == page_obj.number %}
+                                                <span class="btn btn-info btn-sm">{{ page_number }}</span>
+                                            {% else %}
+                                                <span class="btn btn-secondary btn-sm">{{ page_number }}</span>
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <a class="btn btn-primary btn-sm page_number_link"
+                                       href="{{ page_obj.next_page_number }}">
+                                        Next Page
+                                    </a>
+                                {% else %}
+                                    <button class="btn btn-primary btn-sm disabled">
+                                        Next Page
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     {% else %}
                         {% include 'admins/no-data-found.html' %}
                     {% endif %}
@@ -73,7 +128,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                         
+                        <tr>
+                            <td>
+                                <div aria-label="Basic checkbox toggle button group" class="btn-group-vertical"
+                                     id="user_status"
+                                     role="group">
+                                    <input autocomplete="off" class="btn-check" id="user_status_verified"
+                                           name="user_status[]"
+                                           type="checkbox" value="verified">
+                                    <label class="btn btn-outline-primary" for="user_status_verified">Verified
+                                        Agent</label>
+
+                                    <input autocomplete="off" class="btn-check" id="user_status_unverified"
+                                           name="user_status[]"
+                                           type="checkbox" value="unverified">
+                                    <label class="btn btn-outline-primary" for="user_status_unverified">Unverified
+                                        Agent</label>
+
+                                    <input autocomplete="off" class="btn-check" id="user_status_blocked"
+                                           name="user_status[]"
+                                           type="checkbox" value="blocked">
+                                    <label class="btn btn-outline-primary" for="user_status_blocked">Blocked
+                                        Agent</label>
+                                </div>
+                            </td>
+                        </tr>
 
                         <tr>
                             <td class="text-center">
@@ -99,7 +178,23 @@
 
 {% block js %}
     <script>
- 
+        function getParams(url = window.location) {
+            let params = {};
+
+            new URL(url).searchParams.forEach(function (val, key) {
+                if (params[key] !== undefined) {
+                    if (!Array.isArray(params[key])) {
+                        params[key] = [params[key]];
+                    }
+                    params[key].push(val);
+                } else {
+                    params[key] = val;
+                }
+            });
+
+            return params;
+
+        }
 
         $(function () {
             let getParameter = getParams();

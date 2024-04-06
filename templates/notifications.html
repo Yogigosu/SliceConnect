@@ -38,7 +38,25 @@
                     margin-right: 7px;
                 }
             </style>
- 
+            <ul class="pagination">
+                {% if notifications.has_previous %}
+                  <li><a class="btn btn-sm btn-primary" href="?page={{ notifications.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                  <li class="btn btn-sm btn-primary disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in notifications.paginator.page_range %}
+                  {% if notifications.number == i %}
+                    <li class="active btn btn-sm btn-primary"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li><a class="btn btn-sm btn-primary" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if notifications.has_next %}
+                  <li><a class="btn btn-sm btn-primary" href="?page={{ notifications.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                  <li class=" btn btn-sm btn-primary disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
         {% endif %}
 	</div>
 

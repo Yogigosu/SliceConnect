@@ -45,8 +45,77 @@ Admin Panel
                                             <div class="col-12 border-bottom">
                                                 <span class="h3 font-semibold d-block mb-2">Personal Details</span>
                                             </div>
-                                            
- 
+                                            <div class="col-6">
+                                                <div class="col-12 mt-5 text-center">
+                                                    {% if not user_obj.profile_pic %}
+                                                    <img alt="profile pic"
+                                                         src="{% static 'accounts/images/default_profile_image.jpg' %}">
+                                                    {% else %}
+                                                    <img alt="" class="profile-image"
+                                                         src="{{ user_obj.profile_pic.url }}">
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mt-5">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">Username</th>
+                                                        <td>{{ user_obj.username }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Email</th>
+                                                        <td>{{ user_obj.email }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Mobile number</th>
+                                                        <td>{{ user_obj.mobile_number }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Status</th>
+                                                        <td>
+                                                            {% if user_obj.is_active %}
+                                                            <span class="badge bg-success">Active</span>
+                                                            {% else %}
+                                                            <span class="badge bg-secondary">Inactive</span>
+                                                            {% endif %}
+
+                                                            {% if user_obj.is_blocked %}
+                                                            <span class="badge bg-danger">Blocked</span>
+                                                            {% endif %}
+
+                                                            {% if user_obj.is_admin %}
+                                                            <span class="badge bg-info">Admin</span>
+                                                            {% endif %}
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Address</th>
+                                                        <td>
+                                                            {% if user_obj.addresses.all %}
+
+                                                            {% for address in user_obj.addresses.all %}
+                                                            <h6 class="font-bold">{{address.address_title}}</h6>
+                                                            <address>
+                                                                {{ address.address_line1 }}
+                                                                {{ address.address_line2 }} <br>
+                                                                {{ address.street }}
+                                                                {{ address.landmark }} <br>
+                                                                {{ address.city }}
+                                                                {{ address.state }}
+                                                                {{ address.country }} -
+                                                                {{ address.pincode }}
+                                                            </address>
+                                                            {% endfor %}
+                                                            {% else %}
+                                                            -
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
 
                                                 <div class="col-sm-12 mt-5 text-center">
                                                     {% if user_obj.is_blocked %}

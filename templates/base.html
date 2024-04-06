@@ -21,7 +21,30 @@
     {% endblock sidebar %}
 
 
- 
+    <!--    NAVIGATION MENU -->
+    {% block navigation_menu %}
+        {% include '__navigation.html' %}
+    {% endblock navigation_menu %}
+    <div class="notification"></div>
+    {% block offer_slide_with_searchbar %}
+    <!--  OFFER SLIDES   -->
+    <div class="container-fluid animated fadeIn  slide_portion">
+        <h1 class="text-center text-white pt-5">Search sliceconnect</h1>
+        <div class="col-md-8 offset-md-2 col-12 pb-2 mt-5 search_container">
+            <div class="input-group animated bounce">
+                <input type="text" onblur="this.placeholder='e.g. Master Chef'" onfocus="this.placeholder = ''" class="form-control search_input" id="search_input">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary search_icon" type="button"><span class="fa fa-search"></span></button>
+                </span>`
+            </div>
+            <ul class="list-group list_style_none m-2" id="searchResult">
+                <li class="list-group-item">
+                    Master Chef
+                </li>
+                <li class="list-group-item active">Nanking</li>
+            </ul>
+        </div>
+    </div>
     
     {% endblock offer_slide_with_searchbar %}
 

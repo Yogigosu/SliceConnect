@@ -38,7 +38,16 @@
                     </h2>
                 {% endif %}
             </div>
- 
+            <div class="col-md-3">
+                <form class="d-flex" method="GET">
+                    <input aria-label="Search" class="form-control me-2" name="search_user"
+                           placeholder="Search by id, name, or email" type="search" id="search-input">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-md-8 offset-md-1">
                 <div class="main-content">
@@ -66,7 +75,47 @@
                             </tbody>
                         </table>
 
-                       
+                        {% if page_obj|length > 0 %}
+                            <div class="my-4">
+                                {% if page_obj.has_previous %}
+                                    <a class="btn btn-primary btn-sm page_number_link"
+                                       href="{{ page_obj.previous_page_number }}">
+                                        Previous Page
+                                    </a>
+                                {% else %}
+                                    <button class="btn btn-primary btn-sm disabled">
+                                        Previous Page
+                                    </button>
+                                {% endif %}
+
+                                {% for page_number in page_obj.adjusted_elided_pages %}
+                                    {% if page_number == page_obj.paginator.ELLIPSIS %}
+                                        {{ page_number }}
+                                    {% else %}
+                                        <a class="page_number_link"
+                                           href="{{ page_number }}">
+
+                                            {% if page_number == page_obj.number %}
+                                                <span class="btn btn-info btn-sm">{{ page_number }}</span>
+                                            {% else %}
+                                                <span class="btn btn-secondary btn-sm">{{ page_number }}</span>
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <a class="btn btn-primary btn-sm page_number_link"
+                                       href="{{ page_obj.next_page_number }}">
+                                        Next Page
+                                    </a>
+                                {% else %}
+                                    <button class="btn btn-primary btn-sm disabled">
+                                        Next Page
+                                    </button>
+                                {% endif %}
+                            </div>
+                        {% endif %}
 
 
                     {% else %}
@@ -183,7 +232,36 @@
 
         let mainQueryParams = new URLSearchParams();
 
- 
+        let page = getParameter['page']
+        if (page) {
+            mainQueryParams.set("page", page);
+        }
+        let search_user = getParameter['search_user']
+        if (search_user) {
+            mainQueryParams.set("search_user", search_user);
+        }
+
+        if (user_status_params) {
+            if (typeof (user_status_params) !== "string") {
+                for (let i = 0; i < user_status_params.length; i++) {
+                    mainQueryParams.append("user_status[]", user_status_params[i]);
+                }
+            } else {
+                mainQueryParams.set("user_status[]", user_status_params);
+            }
+        }
+
+        let page_number_links = $('.page_number_link');
+        if(page_number_links.length) {
+            for (let i=0; i<page_number_links.length; i++) {
+                let queryParams = mainQueryParams
+                queryParams.set("page", $(page_number_links[i]).attr('href'));
+                let next_url = location.protocol + '//' + location.host + location.pathname + "?" + queryParams.toString()
+                $(page_number_links[i]).attr('href', next_url);
+            }
+        }
+
+
     })
 
 </script>

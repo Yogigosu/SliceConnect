@@ -24,7 +24,21 @@ class IncreaseQuantityOfCartItemServices:
         return Response(serializer.data)
 
 
- 
+class DecreaseQuantityOfCartItemService:
+
+    @staticmethod
+    def decrease_quantity_of_cart_item(request, pk):
+        instance = get_object_or_404(CartItems, item_id=pk, cart__user_id=request.user.id)
+
+        serializer = DecreaseQuantityOfCartItemSerializer(
+            instance,
+            data=request.data,
+            context={'request': request, 'pk': pk}
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 class DeleteCartItemService:

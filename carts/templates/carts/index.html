@@ -28,7 +28,43 @@
             }
             return cookieValue;
         }
+        // JavaScript wrapper function to send HTTP requests using Django's "X-CSRFToken" request header
+        function sendHttpAsync(path, method, body) {
+            let props = {
+                method: method,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                mode: "same-origin",
+            }
 
+            if (body !== null && body !== undefined) {
+                props.body = JSON.stringify(body);
+            }
+            {#console.log(props, path)#}
+            return fetch(path, props)
+                .then(response => {
+                    return response.json()
+                        .then(result => {
+                            return {
+                                ok: response.ok,
+                                body: result
+                            }
+                        });
+                })
+                .then(resultObj => {
+                    return resultObj;
+                })
+                .catch(error => {
+                    throw error;
+                });
+        }
+        let requestBody = {
+            {#"cart": "1",#}
+            "item": "1"
+        };
         sendHttpAsync("/cart/create-item/", "POST", requestBody)
         .then(response => {
             console.log(response);

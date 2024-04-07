@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>redirecting... {{ redirect_to }}</title>
+</head>
+<body>
+Allow location to continue.
+<br>
+<br>
+<div id="container">
+
+</div>
+<p id="error-in-page" style="color:red"></p>
+<script>
+    let x = document.getElementById("error-in-page");
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+   
+
+    getLocation()
+</script>
+</body>
+</html>

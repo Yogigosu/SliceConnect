@@ -20,7 +20,17 @@ class CheckOrderAgentMixin:
         raise PermissionDenied
 
 
- 
+class VerifiedAgentRequiredMixin:
+
+    def dispatch(self, request, *args, **kwargs):
+        agent = request.user
+        if not hasattr(agent, 'document'):
+            raise PermissionDenied
+        elif not agent.document.is_verified or agent.document.application_status != 'approved':
+            return redirect('agent-application-status')
+        return super(VerifiedAgentRequiredMixin, self).dispatch(request, *args, **kwargs)
+
+
 class AvailableAgentRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         status = AdditionalDetail.get_agent_status(request.user)

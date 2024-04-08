@@ -1,13 +1,28 @@
 from django import forms
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
- 
+from FDA.constants import DELIVERY_AGENT_ADDRESS_TITLE, ACCOUNT_INVALID_STATE_ERROR, ACCOUNT_INVALID_CITY_ERROR
+from accounts.forms import RegisterForm
+from accounts.models import Address, User
 from restaurant.validators import validate_ifsc_code
 from .models import Document
 from .validators import validate_license_no, validate_pancard_no
 
 
- 
+class UserForm(RegisterForm):
+    def save(self, **kwargs):
+        email = self.data.get('email')
+        password = self.data.get('password1')
+        data = {
+            'username': self.data.get('username'),
+            'mobile_number': self.data.get('mobile_number'),
+            'profile_pic': self.data.get('profile_pic'),
+        }
+
+        user = User.objects.create_delivery_agent(email=email, password=password, **data)
+        user.is_active = False
+        user.save()
+        return user
 
 
 class DocumentForm(forms.Form):
@@ -45,4 +60,18 @@ class AddressForm(forms.ModelForm):
         pin_code = self.cleaned_data.get('pincode')
         if len(str(pin_code)) != 6:
             self.add_error('pincode', "Invalid pincode")
- 
+
+        # validating state and city
+        state = self.cleaned_data.get('state')
+        city = self.cleaned_data.get('city')
+
+        if not state:
+            self._errors['state'] = self.error_class([ACCOUNT_INVALID_STATE_ERROR])
+
+        if not city:
+            self._errors['city'] = self.error_class([ACCOUNT_INVALID_CITY_ERROR])
+
+        if state and city and state.id != city.state_id:
+            self._errors['state'] = self.error_class([ACCOUNT_INVALID_STATE_ERROR])
+            self._errors['city'] = self.error_class([ACCOUNT_INVALID_CITY_ERROR])
+        return self.cleaned_data

@@ -1,6 +1,33 @@
 from django.core.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
- 
+
+from FDA.constants import (
+    REQUIRED_FIELD, ALREADY_AN_ACCEPTED_ORDER,
+    CAN_NOT_ACCEPT_WAITING_CANCELLED_OR_REJECTED_ORDER, DELIVERY_ALREADY_ACCEPTED,
+    ALREADY_UPDATED, ORDER_NOT_DELIVERED, OTP_NOT_FOUND, WRONG_OTP
+)
+from delivery_agent.models import AcceptedOrder
+from orders.models import Order
+from orders.utils import get_delivery_charge_from_distance
+
+
+def validate_delivery_status_data(data, user):
+    delivery_status = {
+        0: 'ready to pick',
+        1: 'picked',
+        2: 'out for delivery',
+    }
+    try:
+        order_id = data['id']
+        status = int(data['status'])
+        data['status'] = delivery_status[status]
+    except Exception as e:
+        raise ValidationError('Bad Request') from e
+    order_agent = AcceptedOrder.get_agent_from_order_id(order_id)
+    if not order_agent or order_agent != user:
+        raise PermissionDenied
+    return data
+
 
 def validate_accept_delivery_data(data, agent):
     order_id = data.get('order_id')

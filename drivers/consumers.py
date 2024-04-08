@@ -18,4 +18,19 @@ class AvailableDeliveries(WebsocketConsumer):
             self.room_name,
             self.channel_name,
         )
- 
+
+    def disconnect(self, close_code):
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_name,
+            self.channel_name,
+        )
+
+    # server to client
+    def receive(self, text_data=None, bytes_data=None):
+        pass
+
+    def order_received(self, event):
+        self.send(text_data=json.dumps(event))
+
+    def delivery_accepted(self, event):
+        self.send(text_data=json.dumps(event))

@@ -29,4 +29,18 @@ def convert_into_star_rating(queryset, restaurant=None):
 
     return queryset
 
- 
+
+def get_rating_degrees(rating):
+    if rating:
+        rating_degrees = rating * (360 // 5)
+
+        if rating_degrees <= 180:
+            first_half_rating_degrees = rating_degrees
+            second_half_rating_degrees = 0
+        else:
+            first_half_rating_degrees = 180
+            second_half_rating_degrees = rating_degrees - 180
+    else:
+        rating = first_half_rating_degrees = second_half_rating_degrees = 0
+
+    return rating, first_half_rating_degrees, second_half_rating_degrees

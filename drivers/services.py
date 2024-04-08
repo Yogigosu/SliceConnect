@@ -11,9 +11,50 @@ from FDA.constants import (
     ACCOUNT_REGISTER_SUCCESS, PAYMENT_RECEIVED_SUCCESSFULLY, REQUIRED_FIELD, DELIVERY_ACCEPTED,
     STATUS_UPDATED, ORDER_DELIVERED, OTP_RESEND, AGENT_REGISTRATION_FORM_PAGE
 )
- 
+from accounts.models import User, Address
+from accounts.utils import send_activation_email
+from delivery_agent.forms import UserForm, AddressForm, DocumentForm
+from delivery_agent.models import (
+    ActivationTime, AcceptedOrder, AdditionalDetail, AgentCashEntry
+)
+from delivery_agent.serializers import (
+    UpdateDeliveryStatusSerializer, UpdateAgentStatusSerializer,
+    UpdateDeliveryPaidFieldSerializer
+)
+from delivery_agent.utils import convert_into_star_rating, get_rating_degrees
+from delivery_agent.validations import (
+    validate_delivery_status_data, validate_accept_delivery_data,
+    validate_accept_payment_data, validate_otp_validation_api_data
+)
+from orders.models import Order, OrderItems, OrderPayoutDetail
+from orders.utils import send_otp_email, get_delivery_charge_from_distance
+from restaurant.models import Items
 
- 
+
+class RegisterDeliveryAgentFormService:
+    @staticmethod
+    def get_form():
+        return {'user': UserForm(), 'address': AddressForm(), 'documents': DocumentForm()}
+
+    @staticmethod
+    def save_form(request):
+        user = UserForm(request.POST)
+        address = AddressForm(request.POST)
+        documents = DocumentForm(request.POST, request.FILES)
+
+        if user.is_valid() and address.is_valid() and documents.is_valid():
+            user = user.save()
+            address.save(agent=user)
+            documents.save(agent=user)
+            code = user.get_activation_code()
+            send_activation_email(request, user.email, code)
+            messages.success(request, ACCOUNT_REGISTER_SUCCESS)
+            return redirect('login')
+
+        return render(request, template_name=AGENT_REGISTRATION_FORM_PAGE,
+                      context={'user': user, 'address': address, 'documents': documents})
+
+
 class AgentPanel:
     @staticmethod
     def get_context_data(context, agent):

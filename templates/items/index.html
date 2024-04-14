@@ -1,0 +1,83 @@
+@extends('layouts.app', ['title' => __('Restaurant Menu Management')])
+@section('admin_title')
+    {{__('Menu')}}
+@endsection
+@section('content')
+    @include('items.partials.modals')
+    @include('items.partials.header', ['title' => __('Edit Restaurant Menu')])
+
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+ 
+                    <br/>
+                    <div class="col-12">
+                        @include('partials.flash')
+                    </div>
+                    <div class="card-body">
+                        @foreach ($categories as $category)
+                        @if($category->active == 1)
+                        <div class="alert alert-default">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h1 font-weight-bold mb-0 text-white">{{ $category->name }}</span>
+                                </div>
+    
+                           
+                            </div>
+                        </div>
+                        @endif
+                        @if($category->active == 1)
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="row row-grid">
+                                    @foreach ( $category->items as $item)
+                                        <div class="col-lg-3">
+                                            <a href="{{ route('items.edit', $item) }}">
+                                                <div class="card">
+                                                    <img class="card-img-top" src="{{ $item->logom }}" alt="...">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title text-primary text-uppercase">{{ $item->name }}</h3>
+                                                        <p class="card-text description mt-3">{{ $item->description }}</p>
+
+                                                        <span class="badge badge-primary badge-pill">@money($item->price, config('settings.cashier_currency'),config('settings.do_convertion'))</span>
+
+                                                        <p class="mt-3 mb-0 text-sm">
+                                                            @if($item->available == 1)
+                                                            <span class="text-success mr-2">{{ __("AVAILABLE") }}</span>
+                                                            @else
+                                                            <span class="text-danger mr-2">{{ __("UNAVAILABLE") }}</span>
+                                                            @endif
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('js')
+<script>
+  $("[data-target='#modal-edit-category']").click(function() {
+    var id = $(this).attr('data-id');
+    var name = $(this).attr('data-name');
+
+
+    //$('#cat_id').val(id);
+    $('#cat_name').val(name);
+    $("#form-edit-category").attr("action", "/categories/"+id);
+})
+</script>
+@endsection

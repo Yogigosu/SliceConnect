@@ -1,0 +1,6 @@
+<div class="card card-profile shadow mt--300">
+ 
+
+  @if(config('settings.is_demo') && config('settings.enable_stripe'))
+    @include('cart.democards')    
+  @endif

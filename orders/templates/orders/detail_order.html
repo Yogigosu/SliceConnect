@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    order Details
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'customers/css/cart.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block navbar %}
+    {% include 'customers/navbar.html' %}
+{% endblock %}
+ 
+{% block js %}
+    <script>
+        function copy_text() {
+            // Copy the text inside the text field
+            navigator.clipboard.writeText("{{ order.accepted_order.agent.mobile_number }}");
+
+            // Alert the copied text
+            alert("Copied the mobile number: {{ order.accepted_order.agent.mobile_number }}");
+        }
+    </script>
+{% endblock %}

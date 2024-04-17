@@ -13,7 +13,18 @@
             @include('partials.select', ['class'=>"col-12",'name'=>"Type",'id'=>"type",'placeholder'=>"Select type",'data'=>['Vendor', 'Blog'],'required'=>true])
         @endif
     </div>
- 
+    <div class="col-md-3">
+        @if(isset($banner) && $banner->type == 0)
+            @include('partials.select', ['class'=>"col-12",'name'=>"Vendor",'id'=>"vendor_id",'placeholder'=>"Select restaurant",'data'=>$restaurants,'required'=>false, 'value'=>$banner->vendor_id ])
+            @include('partials.select', ['class'=>"col-12",'name'=>"Page",'id'=>"page_id",'placeholder'=>"Select page",'data'=>$pages,'required'=>false, 'value'=>$banner->page_id])
+        @elseif(isset($banner) && $banner->type == 1)
+        @include('partials.select', ['class'=>"col-12",'name'=>"Vendor",'id'=>"vendor_id",'placeholder'=>"Select restaurant",'data'=>$restaurants,'required'=>false, 'value'=>$banner->vendor_id ])
+            @include('partials.select', ['class'=>"col-12",'name'=>"Page",'id'=>"page_id",'placeholder'=>"Select page",'data'=>$pages,'required'=>false, 'value'=>$banner->page_id])
+        @else
+            @include('partials.select', ['class'=>"col-12",'name'=>"Vendor",'id'=>"vendor_id",'placeholder'=>"Select restaurant",'data'=>$restaurants,'required'=>false])
+            @include('partials.select', ['class'=>"col-12",'name'=>"Page",'id'=>"page_id",'placeholder'=>"Select page",'data'=>$pages,'required'=>false])
+        @endif
+    </div>
 </div>
 <div class="row">
     <div class="col-md-3">

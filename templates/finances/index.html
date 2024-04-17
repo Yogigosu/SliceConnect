@@ -17,7 +17,21 @@
         </div>
 
         <br />
- 
+    
+        <!-- Info cards -->
+        @isset($cards)
+            @include('partials.infoboxes.index') 
+        @endisset
+
+
+        <br />
+        <div class="row">
+            <div class="col">
+                <!-- Order Card -->
+                @include('orders.partials.ordercard',['financialReport'=>true])
+            </div>
+        </div>
+
 
     </div>
 @endsection

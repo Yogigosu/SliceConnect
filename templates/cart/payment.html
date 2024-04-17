@@ -4,7 +4,30 @@
         <h3>{{ __('Checkout') }}<span class="font-weight-light"></span></h3>
       </div>
       <div  class="border-top">
- 
+        <!-- Price overview -->
+        <div id="totalPrices" v-cloak>
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span v-if="totalPrice==0">{{ __('Cart is empty') }}!</span>
+
+                            <span v-if="totalPrice"><strong>{{ __('Subtotal') }}:</strong></span>
+                            <span v-if="totalPrice" class="ammount"><strong>@{{ totalPriceFormat }}</strong></span>
+                            @if(config('app.isft'))
+                                <span v-if="totalPrice&&delivery"><br /><strong>{{ __('Delivery') }}:</strong></span>
+                                <span v-if="totalPrice&&delivery" class="ammount"><strong>@{{ deliveryPriceFormated }}</strong></span><br />
+                            @endif
+                            <br />
+                            <span v-if="totalPrice"><strong>{{ __('TOTAL') }}:</strong></span>
+                            <span v-if="totalPrice" class="ammount"><strong>@{{ withDeliveryFormat   }}</strong></span>
+                            <input v-if="totalPrice" type="hidden" id="tootalPricewithDeliveryRaw" :value="withDelivery" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End price overview -->
 
         <!-- Payment  Methods -->
         <div class="cards">

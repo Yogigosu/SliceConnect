@@ -42,7 +42,35 @@
     <td class="table-web">
         {{ $order->created_at->format(config('settings.datetime_display_format')) }}
     </td>
- 
+    <td class="table-web">
+        @if ($order->delivery_method==1)
+            <span class="badge badge-primary badge-pill">{{ __('Delivery') }} | {{ __($order->payment_method) }} </span>
+        @else
+            <span class="badge badge-success badge-pill">{{ __('Pickup') }} | {{ __($order->payment_method) }}</span>
+        @endif
+
+    </td>
+    
+    <td class="table-web">
+        @money( $order->fee_value+$order->static_fee, config('settings.cashier_currency'),config('settings.do_convertion'))
+    </td>
+    <td class="table-web">
+        @money( $order->payment_processor_fee, config('settings.cashier_currency'),config('settings.do_convertion'))
+    </td>
+    <td class="table-web">
+        @money( $order->delivery_price, config('settings.cashier_currency'),config('settings.do_convertion'))
+    </td>
+    <td class="table-web">
+        @money( $order->order_price-($order->fee_value+$order->static_fee), config('settings.cashier_currency'),config('settings.do_convertion'))
+    </td>
+    <td class="table-web">
+        @money( $order->vatvalue, config('settings.cashier_currency'),config('settings.do_convertion'))
+    </td>
+    <td class="table-web">
+        @money( $order->order_price-($order->fee_value+$order->static_fee)-$order->vatvalue, config('settings.cashier_currency'),config('settings.do_convertion'))
+    </td>
+
+    
    
     <td class="table-web">
         @money( $order->order_price+$order->delivery_price, config('settings.cashier_currency'),config('settings.do_convertion'))

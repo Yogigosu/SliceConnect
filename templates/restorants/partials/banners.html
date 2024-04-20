@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row blog">
+        <div class="col-md-12">
+            <div id="blogCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+ 
+                    @if(count($banners) <= 3)
+                        <div class="carousel-item">
+                            <div class="row">
+                                @for($i = 0; $i < count($banners); $i++)
+                                    <div class="col-xl-4 col-lg-6">
+                                        <div class="card mb-4 mb-xl-0 bg-secondary">
+                                            <img src="{{ $banners[$i]->imgm }}" width="401px" height="170px" alt="..."/>
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    @elseif(count($banners) > 3 && count($banners) <= 6)
+                        <div class="carousel-item">
+                            <div class="row">
+                                @for($i = 3; $i < count($banners); $i++)
+                                    <div class="col-xl-4 col-lg-6">
+                                        <div class="card mb-4 mb-xl-0 bg-secondary">
+                                            <img src="{{ $banners[$i]->imgm }}" width="401px" height="170px" alt="..."/>
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+ 
+                </div>
+                <a class="carousel-control-prev" href="#blogCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only bg-primary">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#blogCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

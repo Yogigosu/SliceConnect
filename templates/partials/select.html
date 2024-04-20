@@ -1,0 +1,15 @@
+<div id="form-group-{{ $id }}" class="form-group {{ $errors->has($id) ? ' has-danger' : '' }}  @isset($class) {{$class}} @endisset">
+
+    <label class="form-control-label">{{ __($name) }}</label><br />
+
+ 
+
+    @isset($additionalInfo)
+        <small class="text-muted"><strong>{{ __($additionalInfo) }}</strong></small>
+    @endisset
+    @if ($errors->has($id))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first($id) }}</strong>
+        </span>
+    @endif
+</div>

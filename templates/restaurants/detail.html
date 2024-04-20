@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}{{ restaurant.title }}{% endblock title %}
+{% block css_files %}
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/clockpicker/clockpicker.min.css' %}">
+{% endblock css_files %}
+{% block offer_slide_with_searchbar %}{% endblock offer_slide_with_searchbar %}
+
+{% block content %}
+    {% include 'restaurants/__include/__restaurant_cover.html' %}
+
+
+    <!-- ORDER MENU AND ITEMS -->
+    <div class="container mb-3 mt-2">
+        <div class="row">
+            <style type="text/css">
+                .my-cart-badge{
+                    font-size: 1.0em!important; font-weight: bold; border-radius: 10px
+                }
+                .table{
+                    font-size: 0.8em!important;
+                }
+            </style>
+ 
+            <!-- ITEM TABLES -->
+            {% if foods %}
+                <div class="mb-1 col-12">
+                    <button onclick="changeIcon('cat1');" class="w_200px text-left btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="#collapsibleCategory1" aria-expanded="false" aria-controls="collapsibleCategory1">
+                        <span id="cat1" data-open='false' class="fa fa-angle-double-right"> Category
+                    </button>
+                </div>
+ 
+                <div class="col-12 mb-1">
+                    <button onclick="changeIcon('cat2');" class="w_200px btn btn-info text-left btn-sm" type="button" data-toggle="collapse" data-target="#collapsibleCategory2" aria-expanded="false" aria-controls="collapsibleCategory2">
+                        <span id="cat2" data-open='false' class="fa fa-angle-double-right"></span> Category
+                    </button>
+                </div>
+                <div id="collapsibleCategory2" class="col-12 collapse">
+                    <table class="text-center table table-bordered">
+                        <tr class="bg-dark text-light">
+                            <th>Name</th>
+                            <th>Price</th>
+                            {% if restaurant.is_orderable %}
+                                <th>Add</th>
+                            {% endif %}
+                        </tr>
+                    {% for food in foods %}
+                        <tr class="bg-light">
+                            <td>
+                                {{ food.title }} - ({{ food.ratio }})
+                            </td>
+                            <td>
+                                <img style="height: 20px; width: 20px" src="{% static 'img/taka.png' %}">{{ food.price }}
+                            </td>
+                            {% if restaurant.is_orderable %}
+                            <td>
+                                <button class="btn btn-sm btn-info my-cart-btn" data-id="{{ forloop.counter }}" data-name="{{ food.title }}" data-summary="{{ food.slug }}" data-price="{{ food.price }}" data-quantity="1" data-image=""><span class="fa fa-cart-plus"></span> add</button>
+                            </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div><!-- CAT-2 -->
+            {% else %}
+                <h6  class="col-12 text-danger text-center mt-5">No food available!</h6>
+            {% endif %}
+        </div>
+    </div>
+    {% csrf_token %}
+{% endblock content %}
+
+
+
+{% block js_files %}
+    <script id="cart1" type="text/javascript" src="{% static 'js/cart-manager.min.js' %}"></script>
+    <script id="cart2" type="text/javascript" src="{% static 'js/jquery.mycart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugin/clockpicker/clockpicker.min.js' %}"></script>
+ 
+{% endblock js_files %}

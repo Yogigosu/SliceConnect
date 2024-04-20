@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Restaurants{% endblock title %}
+
+{% block content %}
+    <!--  RESTAURANTS LIsST   -->
+    <section class="container-fluid mt-2 mb-3">
+        {% if restaurants %}
+ 
+        <div id="addData" class="row"></div>
+        <div class="text-center mb-3">
+            {% csrf_token %}
+            <button id="showMoreBtn" data-no='20' type="button" class="btn btn-sm btn-info">Load more</button>
+        </div>
+    </section>
+    {% else %}
+        <div class="text-center mt-5 text-danger font-weight-bold">No restaurants found!</div>
+    {% endif %}
+{% endblock content %}
+
+
+{% block js_files %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#showMoreBtn').click(function(){
+                $('#ajaxLoader').show();
+                _this = $('#showMoreBtn');
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'restaurants:list' %}",
+                    data: {
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        'dataNo': _this.attr('data-no'),
+                    },
+                    success: function(response){
+                        _this.attr('data-no', parseFloat(_this.attr('data-no'))+10);
+                        $('#addData').append(response);
+                        $('#ajaxLoader').hide();
+                    },
+                    error: function(){
+                        notifyNow("Couldn't load data. Try again.")
+                        $('#ajaxLoader').hide();
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock js_files %}

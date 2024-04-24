@@ -3,7 +3,9 @@ from django.urls import reverse, resolve
 from delivery_agent.views import (
     RegisterDeliveryAgent, AgentPanelView, UpdateAgentStatusAPIView, SeeAvailableDeliveriesListView,
     AcceptDeliveryAPIView, SeeAllRatingAndReviewsView, AllDeliveriesListView, CurrentDeliveriesListView,
-    DetailOrderTemplateView
+    DetailOrderTemplateView, UpdateDeliveryStatusAPIView, AgentApplicationStatusView, AllTimeEntriesListView,
+    NotAvailableTemplateView, AcceptPaymentAPIView, ValidateOtpAPIView, ResendOtpAPIView,
+    AgentEarningListView, GetCoordinates
 )
 
 
@@ -67,4 +69,22 @@ class TestDeliveryAgentUrls(object):
         url = reverse('not-available')
         assert resolve(url).func.view_class == NotAvailableTemplateView
 
- 
+    def test_accept_payment_url(self):
+        url = reverse('accept_payment')
+        assert resolve(url).func.view_class == AcceptPaymentAPIView
+
+    def test_validate_otp_url(self):
+        url = reverse('validate_otp')
+        assert resolve(url).func.view_class == ValidateOtpAPIView
+
+    def test_resend_otp_url(self):
+        url = reverse('resend_otp')
+        assert resolve(url).func.view_class == ResendOtpAPIView
+
+    def test_agent_earning_url(self):
+        url = reverse('agent_earning')
+        assert resolve(url).func.view_class == AgentEarningListView
+
+    def test_get_coordinates_url(self):
+        url = reverse('get-coordinates')
+        assert resolve(url).func.view_class == GetCoordinates

@@ -25,7 +25,53 @@
                         font-size: 0.9em;
                     }
                 </style>
- 
+
+                <!-- REVIEW FORM -->
+                <form action="{% url 'reviews:create' %}?next={{request.path}}" method="POST">
+                    {% csrf_token %}
+                    <div class="collapse bg-white row p-3" id="collapsedReviewForm">
+                        <label for="food" class="font-weight-bold">Food Quality</label>
+                        <select id="food" class="form-control" name="food">
+                            <option value="1">Very Poor</option>
+                            <option value="2">Poor</option>
+                            <option value="3" selected>Medium</option>
+                            <option value="4">Good</option>
+                            <option value="5">Awesome</option>
+                        </select>
+                         <label for="price" class="font-weight-bold">Price</label>
+                        <select id="price" class="form-control" name="price">
+                            <option value="1">Very Poor</option>
+                            <option value="2">Poor</option>
+                            <option value="3">Medium</option>
+                            <option value="4" selected>Good</option>
+                            <option value="5">Awesome</option>
+                        </select>
+                         <label for="service" class="font-weight-bold">Service</label>
+                        <select id="service" class="form-control" name="service">
+                            <option value="1">Very Poor</option>
+                            <option value="2">Poor</option>
+                            <option value="3" selected="">Medium</option>
+                            <option value="4">Good</option>
+                            <option value="5">Awesome</option>
+                        </select>
+                        <label for="environment" class="font-weight-bold">Environment</label>
+                        <select id="environment" class="form-control" name="environment">
+                            <option value="1">Very Poor</option>
+                            <option value="2">Poor</option>
+                            <option value="3" selected="">Medium</option>
+                            <option value="4">Good</option>
+                            <option value="5">Awesome</option>
+                        </select>
+                        <label for="title" class="font-weight-bold" >Title</label>
+                        <input id="title" name="title" required="" class="form-control" type="text" placeholder="e.g. Awesome">
+                        <input type="hidden" id="restaurant" name="restaurant" value="{{ restaurant.pk }}">
+                        <label for="review" class="font-weight-bold">Review</label>
+                        <textarea id="review" name="review" style="height: 140px" class="form-control mb-1" type="text" placeholder="Your review"></textarea>
+                        <button type="submit" id="reviewSubmit" class=" mb-3 btn btn-sm btn-success">
+                            <span class="fa fa-send"></span> Submit
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
